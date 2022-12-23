@@ -1,27 +1,34 @@
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Scanner;
+import java.time.LocalDate;
+
 
 public class Test {
 
     public static void main(String[] args) {
 
+        Task task3 = new Task("уборка", "уборка", TypeTask.WORKING, Repeatability.WEEKLY,LocalDate.of(2000,12,12));
+        Task task2 = new Task("стирка", "стирка", TypeTask.WORKING, Repeatability.WEEKLY,LocalDate.of(2000,1,12));
+        Task task1 = new Task("готовка", "готовка", TypeTask.WORKING, Repeatability.WEEKLY,LocalDate.of(2000,1,12));
+        TaskService.allTask.put(task1.getId(),task1);
+        TaskService.allTask.put(task2.getId(),task2);
+        TaskService.allTask.put(task3.getId(),task3);
+
         try (Scanner scanner = new Scanner(System.in)) {
             label:
             while (true) {
-                printMenu();
+                TaskService.printMenu();
                 System.out.print("Выберите пункт меню: ");
                 if (scanner.hasNextInt()) {
                     int menu = scanner.nextInt();
                     switch (menu) {
                         case 1:
-                            inputTask(scanner);
+                            TaskService.inputTask(scanner);
                             break;
                         case 2:
-                            // todo: обрабатываем пункт меню 2
+                            TaskService.removeTask(scanner);
                             break;
                         case 3:
-                            // todo: обрабатываем пункт меню 3
+                            TaskService.getTasksForDay(scanner);
                             break;
                         case 0:
                             break label;
@@ -33,42 +40,10 @@ public class Test {
 
             }
         }
-    }
-    private static Map<Integer,Task> allTask = new LinkedHashMap<>();
-
-    private static void inputTask(Scanner scanner) {
-        System.out.print("Введите название задачи: ");
-        String taskName = scanner.next();
-        System.out.print("Введите описание задачи: ");
-        String description = scanner.next();
-        System.out.print("1. Рабочая" + '\n' +
-                "2. Личная"+'\n'+ "Выберите тип задачи: ");
-        String type = "";
-        if (scanner.hasNextInt()) {
-            int menu = scanner.nextInt();
-            if (menu == 1) {
-                type ="WORKING";
-            } else if (menu == 2) {
-                 type = "PERSONAL";
-            }
-
-        } else {
-            scanner.next();
-            System.out.println("Выберите пункт  1 или 2!");
-        }
-        Task task = new Task(taskName,description,TypeTask.valueOf(type),Repeatability.WEEKLY);
-        System.out.println(task);
-        allTask.put(task.getId(),task);
-        System.out.println(allTask);
-    }
-
-    private static void printMenu() {
-        System.out.println(
-                "1. Добавить задачу" + '\n' +
-                        "2. Удалить задачу" + '\n' +
-                        "3. Получить задачу на указанный день" + '\n' +
-                        "0. Выход");
 
     }
 }
+
+
+
 
