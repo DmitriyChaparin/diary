@@ -6,9 +6,9 @@ public class Test {
 
     public static void main(String[] args) {
 
-        Task task3 = new Task("уборка", "уборка", TypeTask.WORKING, Repeatability.WEEKLY,LocalDate.of(2000,12,12));
-        Task task2 = new Task("стирка", "стирка", TypeTask.WORKING, Repeatability.WEEKLY,LocalDate.of(2000,1,12));
-        Task task1 = new Task("готовка", "готовка", TypeTask.WORKING, Repeatability.WEEKLY,LocalDate.of(2000,1,12));
+        Task task3 = new Task("уборка", "уборка", TypeTask.WORKING,LocalDate.of(2000,12,12));
+        Task task2 = new Task("стирка", "стирка", TypeTask.WORKING,LocalDate.of(2000,1,12));
+        WeeklyTask task1 = new WeeklyTask("готовка", "готовка", TypeTask.WORKING, LocalDate.of(2022,12,4));
         TaskService.allTask.put(task1.getId(),task1);
         TaskService.allTask.put(task2.getId(),task2);
         TaskService.allTask.put(task3.getId(),task3);
@@ -22,13 +22,13 @@ public class Test {
                     int menu = scanner.nextInt();
                     switch (menu) {
                         case 1:
-                            TaskService.inputTask(scanner);
+                            TaskService.inputTask();
                             break;
                         case 2:
-                            TaskService.removeTask(scanner);
+                            TaskService.removeTask();
                             break;
                         case 3:
-                            TaskService.getTasksForDay(scanner);
+                            TaskService.getTasksForDay();
                             break;
                         case 0:
                             break label;

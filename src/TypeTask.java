@@ -1,3 +1,4 @@
 public enum TypeTask {
-    WORKING,PERSONAL
+    WORKING,PERSONAL;
+
 }
