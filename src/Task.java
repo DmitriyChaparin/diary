@@ -1,5 +1,8 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class Task {
 
@@ -7,25 +10,26 @@ public class Task {
 
     private String description;
 
-    private Repeatability repeatability;
 
     private TypeTask typeTask;
 
-    private LocalDateTime taskCreationTime;
 
-    private int id;
+    public LocalDate taskCreationData;
+
+    private Integer id;
 
     private static int counter = 0;
 
-    public Task(String headline, String description,TypeTask typeTask ,Repeatability repeatability) {
+    public Task(String headline, String description,TypeTask typeTask , LocalDate taskCreationData) {
         counter++;
         this.headline = headline;
         this.description = description;
         this.typeTask=typeTask;
-        this.repeatability = repeatability;
-        this.taskCreationTime=LocalDateTime.now();
+        this.taskCreationData=taskCreationData;
         id = counter;
     }
+
+
 
     public String getHeadline() {
         return headline;
@@ -43,6 +47,7 @@ public class Task {
         this.description = description;
     }
 
+
     public int getId() {
         return id;
     }
@@ -51,14 +56,35 @@ public class Task {
         this.id = id;
     }
 
+    public LocalDate getTaskCreationData() {
+        return taskCreationData;
+    }
+
+    public void setTaskCreationData(LocalDate taskCreationData) {
+        this.taskCreationData = taskCreationData;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(headline, task.headline) && Objects.equals(description, task.description) && typeTask == task.typeTask && Objects.equals(taskCreationData, task.taskCreationData) && Objects.equals(id, task.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(headline, description, typeTask, taskCreationData, id);
+    }
+
     @Override
     public String toString() {
         return "Task{" +
                 "headline='" + headline + '\'' +
                 ", description='" + description + '\'' +
-                ", repeatability=" + repeatability +
                 ", typeTask=" + typeTask +
-                ", id=" + id +
-                '}';
+                ", taskCreationData=" + taskCreationData +
+                ", id=" + id +"\n";
     }
 }
+
