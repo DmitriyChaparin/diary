@@ -7,6 +7,9 @@ public class MonthlyTask extends Task implements Repeatable{
 
     @Override
     public boolean checkIfSuitable(LocalDate date) {
+        if (taskCreationData.isAfter(date)) {
+            return false;
+        }
         return  date.getDayOfMonth()==taskCreationData.getDayOfMonth();
     }
 }

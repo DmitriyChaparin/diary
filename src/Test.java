@@ -6,13 +6,14 @@ public class Test {
 
     public static void main(String[] args) {
 
-        Task task3 = new Task("уборка", "уборка", TypeTask.WORKING,LocalDate.of(2000,12,12));
-        Task task2 = new Task("стирка", "стирка", TypeTask.WORKING,LocalDate.of(2000,1,12));
-        WeeklyTask task1 = new WeeklyTask("готовка", "готовка", TypeTask.WORKING, LocalDate.of(2022,12,4));
-        TaskService.allTask.put(task1.getId(),task1);
-        TaskService.allTask.put(task2.getId(),task2);
-        TaskService.allTask.put(task3.getId(),task3);
-
+        DailyTask task5 = new DailyTask("уборка", "уборка", TypeTask.WORKING, LocalDate.of(2000, 12, 12));
+        WeeklyTask task2 = new WeeklyTask("стирка", "стирка", TypeTask.WORKING, LocalDate.of(2022, 12, 12));
+        MonthlyTask task1 = new MonthlyTask("готовка", "готовка", TypeTask.WORKING, LocalDate.of(2022, 12, 12));
+        YearlyTask task3 = new YearlyTask("готовка", "готовка", TypeTask.WORKING, LocalDate.of(2022, 1, 4));
+        TaskService.allTask.put(task1.getId(), task1);
+        TaskService.allTask.put(task5.getId(), task5);
+        TaskService.allTask.put(task2.getId(), task2);
+        TaskService.allTask.put(task3.getId(), task3);
         try (Scanner scanner = new Scanner(System.in)) {
             label:
             while (true) {

@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Task {
@@ -15,7 +16,7 @@ public class Task {
 
     public LocalDate taskCreationData;
 
-    private int id;
+    private Integer id;
 
     private static int counter = 0;
 
@@ -61,6 +62,19 @@ public class Task {
 
     public void setTaskCreationData(LocalDate taskCreationData) {
         this.taskCreationData = taskCreationData;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(headline, task.headline) && Objects.equals(description, task.description) && typeTask == task.typeTask && Objects.equals(taskCreationData, task.taskCreationData) && Objects.equals(id, task.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(headline, description, typeTask, taskCreationData, id);
     }
 
     @Override

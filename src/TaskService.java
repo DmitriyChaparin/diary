@@ -22,8 +22,9 @@ public class TaskService {
             type = "WORKING";
         } else if (type.equals("2")) {
             type = "PERSONAL";
+        } else {
+            type = "WORKING";
         }
-        // доработать
 
         LocalDate date = null;
 
@@ -63,8 +64,8 @@ public class TaskService {
                 task = new Task(taskName, description, TypeTask.valueOf(type), date);
         }
         allTask.put(task.getId(), task);
-        System.out.println("Задача добавлена");
-        System.out.println(allTask);
+        System.out.println("Задача '" + task.getHeadline() + "' добавлена");
+
 
     }
 
@@ -80,14 +81,18 @@ public class TaskService {
             System.out.print("Введите день: ");
             int day = scanner.nextInt();
             LocalDate date = LocalDate.of(years, month, day);
-            System.out.println("Задачи на " + date + ": ");
 
-            for (Map.Entry<Integer, Task> task : allTask.entrySet()) {
-                boolean equal = task.getValue().getTaskCreationData().isEqual(date);
-                if (equal) {
-                    System.out.println(task.getValue().getHeadline());
+            List<Task> result = new ArrayList<>();
+            for (Map.Entry<Integer, Task> entry : allTask.entrySet()) {
+                Task task = entry.getValue();
+                if (task instanceof Repeatable
+                        && ((Repeatable) task).checkIfSuitable(date)
+                        || !(task instanceof Repeatable)
+                        && task.getTaskCreationData().equals(date)) {
+                    result.add(task);
                 }
             }
+            System.out.println("Задачи на " + date + ": \n" + result);
         } catch (InputMismatchException e) {
             System.out.print("Вы ввели не корректые данные\n");
             getTasksForDay();
@@ -102,18 +107,8 @@ public class TaskService {
         try {
             System.out.print("Введите номер задачи которую нужно удалить: ");
             int removeId = scanner.nextInt();
-            if (allTask.containsKey(removeId)) {
-                for (Map.Entry<Integer, Task> task : allTask.entrySet()) {
-                    boolean equal = task.getKey().equals(removeId);
-                    if (equal) {
-                        allTask.remove(task.getKey());
-                        System.out.println("Задача " + task.getValue().getHeadline() + " удалена.");
-                    }
-                }
-
-            } else {
-                System.out.println("Такой задачи нет в списке!");
-            }
+            allTask.remove(removeId);
+            System.out.println("Задача  удалена.");
         } catch (InputMismatchException e) {
             System.out.print("Вы ввели не корректые данные\n");
             removeTask();
